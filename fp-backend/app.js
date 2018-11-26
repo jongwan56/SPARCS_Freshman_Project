@@ -1,55 +1,68 @@
-const createError = require('http-errors');
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import Debug from 'debug';
+import express from 'express';
+import logger from 'morgan';
+import path from 'path';
+import api from './routes';
+import mongoose from 'mongoose';
+import session from 'express-session';
 
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+// import favicon from 'serve-favicon';
 
 const app = express();
+const debug = Debug('fp-backend:app');
 
-// Body-parser
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
+// uncomment after placing your favicon in /public
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
+/* setup routers & static directory */
+app.use('/api', api);
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
 // error handler
+/* eslint no-unused-vars: 0 */
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json(err);
 });
 
-mongoose.Promise = global.Promise;
+// Handle uncaughtException
+process.on('uncaughtException', (err) => {
+  debug('Caught exception: %j', err);
+  process.exit(1);
+});
 
-// CONNECT TO MONGODB SERVER
-mongoose.connect('mongodb://localhost/fp-db', { useNewUrlParser: true })
-  .then(() => console.log('Successfully connected to mongodb'))
-  .catch(e => console.error(e));
+/* mongodb connection */
+const db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', () => { console.log('Connected to mongodb server'); });
+// mongoose.connect('mongodb://username:password@host:port/database=');
+mongoose.connect('mongodb://localhost/freshman-project', { useMongoClient: true });
 
-module.exports = app;
+/* use session */
+app.use(session({
+  secret: 'Freshman$1$234',
+  resave: false,
+  saveUninitialized: true
+}));
+
+export default app;
