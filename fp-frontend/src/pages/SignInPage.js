@@ -6,8 +6,7 @@ import { withRouter } from 'react-router-dom';
 
 class SignIn extends Component {
   handleSignIn = (id, pw) => {
-    const { signInRequest, history } = this.props;
-    return signInRequest(id, pw).then(
+    return this.props.signInRequest(id, pw).then(
       () => {
         if(this.props.status === "SUCCESS") {
           // create session data
@@ -19,9 +18,21 @@ class SignIn extends Component {
           document.cookie = 'key=' + btoa(JSON.stringify(loginData));
 
           console.log(`GoGo`);
-          history.push(`/`);
+          this.props.history.push(`/`);
           return true;
         } else {
+          /*
+            ERROR CODES:
+              1: SIGNIN FAILED
+              2: ID NOT FOUND
+              3: PASSWORD MISMATCH
+          */
+
+          const errorMessage = [
+            'Error',
+            'ID doesn\'t exists',
+            'Wrong Password',
+          ];
           return false;
         }
       }
@@ -37,7 +48,8 @@ class SignIn extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    status: state.account.login.status
+    status: state.account.login.status,
+    errorCode: state.account.register.error,
   };
 };
 

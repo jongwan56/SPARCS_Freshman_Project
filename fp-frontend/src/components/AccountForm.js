@@ -68,6 +68,20 @@ class AccountForm extends Component {
     }
   }
 
+  handleClickSignUp = async () => {
+    const { name, id, password } = this.state;
+    // console.log(`${name}, ${id}, ${password}`);
+    
+    const success = await this.props.onSignUp(name, id, password);
+    if(!success) {
+      this.setState({
+        name: '',
+        id: '',
+        password: '',
+      });
+    }
+  }
+
   handleChange = prop => event => {
     this.setState({
       [prop]: event.target.value,

@@ -14,7 +14,7 @@ const styles = theme => ({
 
 class AccountContainer extends Component {
   render() {
-    const { classes, signInMode, onSignIn } = this.props;
+    const { classes, signInMode, onSignIn, onSignUp } = this.props;
     
     return (
       <Grid
@@ -24,7 +24,7 @@ class AccountContainer extends Component {
         alignItems='center'
         justify='center'
       >
-        <AccountForm signInMode={signInMode} onSignIn={onSignIn} />
+        <AccountForm signInMode={signInMode} onSignIn={onSignIn} onSignUp={onSignUp} />
       </Grid>
     );
   }

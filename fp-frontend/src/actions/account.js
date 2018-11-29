@@ -3,6 +3,9 @@ import {
     ACCOUNT_SIGNIN,
     ACCOUNT_SIGNIN_SUCCESS,
     ACCOUNT_SIGNIN_FAILURE,
+    ACCOUNT_SIGNUP,
+    ACCOUNT_SIGNUP_SUCCESS,
+    ACCOUNT_SIGNUP_FAILURE,
 } from './ActionTypes';
 
 /*============================================================================
@@ -20,9 +23,24 @@ export function signInRequest(id, password) {
       const success = await axios.post('/api/account/signin', { id, password });
       console.log(success);
       dispatch(signInSuccess(id));
-    } catch {
+    } catch (error) {
       console.log('fail');
-      dispatch(signInFailure());
+      dispatch(signInFailure(error.response.data.code));
+    }
+  };
+}
+
+export function signUpRequest(name, id, password) {
+  return async (dispatch) => {
+    dispatch(signUp());
+
+    try {
+      const success = await axios.post('/api/account/signup', { name, id, password });
+      console.log(success);
+      dispatch(signUpSuccess(id));
+    } catch (error) {
+      console.log('fail');
+      dispatch(signUpFailure(error.response.data.code));
     }
   };
 }
@@ -33,6 +51,12 @@ export function signIn() {
   };
 }
 
+export function signUp() {
+  return {
+    type: ACCOUNT_SIGNUP,
+  };
+}
+
 export function signInSuccess(id) {
   return {
     type: ACCOUNT_SIGNIN_SUCCESS,
@@ -40,8 +64,23 @@ export function signInSuccess(id) {
   };
 }
 
-export function signInFailure() {
+export function signUpSuccess(id) {
+  return {
+    type: ACCOUNT_SIGNUP_SUCCESS,
+    id,
+  };
+}
+
+export function signInFailure(error) {
   return {
     type: ACCOUNT_SIGNIN_FAILURE,
+    error,
+  };
+}
+
+export function signUpFailure(error) {
+  return {
+    type: ACCOUNT_SIGNUP_FAILURE,
+    error,
   };
 }
