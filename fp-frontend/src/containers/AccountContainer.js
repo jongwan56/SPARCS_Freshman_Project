@@ -1,17 +1,32 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { AccountForm } from 'components';
 
 const styles = theme => ({
-
+  root: {
+    height: '100vh',
+    width: '100vw',
+    background: '#BBBBBB',
+  }
 });
 
 class AccountContainer extends Component {
   render() {
-    console.log(`render in homePageContainer`);
-
-    return <div>하하하</div>;
+    const { classes, signInMode, onSignIn } = this.props;
+    
+    return (
+      <Grid
+        container
+        className={classes.root}
+        direction='column'
+        alignItems='center'
+        justify='center'
+      >
+        <AccountForm signInMode={signInMode} onSignIn={onSignIn} />
+      </Grid>
+    );
   }
 }
 

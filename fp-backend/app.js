@@ -13,6 +13,13 @@ import session from 'express-session';
 const app = express();
 const debug = Debug('fp-backend:app');
 
+/* use session */
+app.use(session({
+  secret: 'Freshman$1$234',
+  resave: false,
+  saveUninitialized: true
+}));
+
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -58,11 +65,6 @@ db.once('open', () => { console.log('Connected to mongodb server'); });
 // mongoose.connect('mongodb://username:password@host:port/database=');
 mongoose.connect('mongodb://localhost/freshman-project', { useNewUrlParser: true });
 
-/* use session */
-app.use(session({
-  secret: 'Freshman$1$234',
-  resave: false,
-  saveUninitialized: true
-}));
+
 
 export default app;

@@ -5,19 +5,20 @@ const router = express.Router();
 
 /*
   ACCOUNT SIGNUP: POST /api/account/signup
-  BODY SAMPLE: { "username": "test", "password": "test" }
+  BODY SAMPLE: { "id": "test", "password": "test" }
   ERROR CODES:
-      1: BAD USERNAME
+      1: BAD ID
       2: BAD PASSWORD
-      3: USERNAM EXISTS
+      3: ID EXISTS
 */
 router.post('/signup', (req, res) => {
-  // CHECK USERNAME FORMAT
-  const usernameRegex = /^[a-z0-9]+$/;
+  // CHECK ID FORMAT
+  const idRegex = /^[a-z0-9]+$/;
+  console.log(req.body)
 
-  if(!usernameRegex.test(req.body.username)) {
+  if(!idRegex.test(req.body.id)) {
     return res.status(400).json({
-      error: "BAD USERNAME",
+      error: "BAD ID",
       code: 1
     });
   }
@@ -31,19 +32,20 @@ router.post('/signup', (req, res) => {
   }
 
   // CHECK USER EXISTANCE
-  Account.findOne({ username: req.body.username }, (err, exists) => {
+  Account.findOne({ id: req.body.id }, (err, exists) => {
     if (err) throw err;
     if (exists){
       return res.status(409).json({
-        error: "USERNAME EXISTS",
+        error: "ID EXISTS",
         code: 3
       });
     }
 
     // CREATE ACCOUNT
     let account = new Account({
-      username: req.body.username,
-      password: req.body.password
+      name: req.body.name,
+      id: req.body.id,
+      password: req.body.password,
     });
 
     account.password = account.generateHash(account.password);
@@ -60,46 +62,52 @@ router.post('/signup', (req, res) => {
     ACCOUNT SIGNIN: POST /api/account/signin
     BODY SAMPLE: { "username": "test", "password": "test" }
     ERROR CODES:
-        1: LOGIN FAILED
+        1: SIGNIN FAILED
+        2: ID NOT FOUND
+        3: PASSWORD MISMATCH
 */
 router.post('/signin', (req, res) => {
+  // console.log(req.body);
+
   if (typeof req.body.password !== "string") {
     return res.status(401).json({
-      error: "LOGIN FAILED",
-      code: 1
+      error: "SIGNIN FAILED",
+      code: 1,
     });
   }
 
   // FIND THE USER BY USERNAME
-  Account.findOne({ username: req.body.username}, (err, account) => {
+  Account.findOne({ id: req.body.id }, (err, account) => {
     if(err) throw err;
+
+    // console.log(account);
 
     // CHECK ACCOUNT EXISTANCY
     if(!account) {
       return res.status(401).json({
-        error: "LOGIN FAILED",
-        code: 1
+        error: "ID NOT FOUND",
+        code: 2,
       });
     }
 
     // CHECK WHETHER THE PASSWORD IS VALID
     if(!account.validateHash(req.body.password)) {
       return res.status(401).json({
-        error: "LOGIN FAILED",
-        code: 1
+        error: "PASSWORD MISMATCH",
+        code: 3,
       });
     }
 
     // ALTER SESSION
-    let session = req.session;
-    session.loginInfo = {
+    // console.log(req.session);
+    req.session.loginInfo = {
       _id: account._id,
-      username: account.username
+      id: account.id,
     };
 
     // RETURN SUCCESS
     return res.json({
-      success: true
+      success: true,
     });
   });
 });
