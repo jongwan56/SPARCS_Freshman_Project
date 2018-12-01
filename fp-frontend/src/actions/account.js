@@ -6,13 +6,16 @@ import {
     ACCOUNT_SIGNUP,
     ACCOUNT_SIGNUP_SUCCESS,
     ACCOUNT_SIGNUP_FAILURE,
+    ACCOUNT_GET_STATUS,
+    ACCOUNT_GET_STATUS_SUCCESS,
+    ACCOUNT_GET_STATUS_FAILURE,
+    ACCOUNT_SIGNOUT,
 } from './ActionTypes';
 
 /*============================================================================
     account
 ==============================================================================*/
 
-/* SIGNIN */
 export function signInRequest(id, password) {
   return async (dispatch) => {
     // Inform signin API is starting
@@ -82,5 +85,54 @@ export function signUpFailure(error) {
   return {
     type: ACCOUNT_SIGNUP_FAILURE,
     error,
+  };
+}
+
+/* GET STATUS */
+export function getStatusRequest() {
+  return (dispatch) => {
+      // inform Get Status API is starting
+      dispatch(getStatus());
+
+      return axios.get('/api/account/getInfo')
+      .then((response) => {
+          dispatch(getStatusSuccess(response.data.info.id));
+      }).catch((error) => {
+          dispatch(getStatusFailure());
+      });
+  };
+}
+
+export function getStatus() {
+  return {
+      type: ACCOUNT_GET_STATUS,
+  };
+}
+
+export function getStatusSuccess(id) {
+  return {
+      type: ACCOUNT_GET_STATUS_SUCCESS,
+      id,
+  };
+}
+
+export function getStatusFailure() {
+  return {
+      type: ACCOUNT_GET_STATUS_FAILURE,
+  };
+}
+
+export function signOutRequest() {
+  return (dispatch) => {
+      return axios.post('/api/account/signout')
+      .then((response) => {
+          dispatch(signOut());
+      });
+  };
+}
+
+export function signOut() {
+  return {
+      type: ACCOUNT_SIGNOUT
   };
 }

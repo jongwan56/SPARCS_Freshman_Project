@@ -11,6 +11,7 @@ const initialState = {
     error: -1,
   },
   status: {
+    valid: false,
     isLoggedIn: false,
     currentUser: '',
   },
@@ -70,7 +71,33 @@ export default function account(state = initialState, action) {
           error: { $set: action.error }
         }
       });
-
+    case types.ACCOUNT_GET_STATUS:
+      return update(state, {
+          status: {
+              isLoggedIn: { $set: true }
+          }
+      });
+    case types.ACCOUNT_GET_STATUS_SUCCESS:
+      return update(state, {
+          status: {
+              valid: { $set: true },
+              currentUser: { $set: action.id }
+          }
+      });
+    case types.ACCOUNT_GET_STATUS_FAILURE:
+      return update(state, {
+          status: {
+              valid: { $set: false },
+              isLoggedIn: { $set: false }
+          }
+      });
+    case types.ACCOUNT_SIGNOUT:
+      return update(state, {
+          status: {
+              isLoggedIn: { $set: false },
+              currentUser: { $set: '' }
+          }
+      });
     default:
       return state;
   }

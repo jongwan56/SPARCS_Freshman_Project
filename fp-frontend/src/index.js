@@ -10,8 +10,22 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from 'reducers';
 import thunk from 'redux-thunk';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#8bc34a',
+    },
+    secondary: {
+      main: '#76ff03',
+    }
+  }
+});
+
 ReactDOM.render(<Provider store={createStore(reducers, applyMiddleware(thunk))}>
-                  <App />
+                  <MuiThemeProvider theme={theme}>
+                    <App />
+                  </MuiThemeProvider>
                 </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

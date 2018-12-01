@@ -128,7 +128,7 @@ router.get('/getinfo', (req, res) => {
 /*
     LOGOUT: POST /api/account/logout
 */
-router.post('/logout', (req, res) => {
+router.post('/signout', (req, res) => {
   req.session.destroy(err => { if (err) throw err; });
   return res.json({ sucess: true });
 });
