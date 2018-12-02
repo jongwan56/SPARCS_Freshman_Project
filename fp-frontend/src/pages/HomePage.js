@@ -125,7 +125,14 @@ class Home extends Component {
         <Header handleClickHome={this.handleHomeClick} handleSignOut={this.handleSignOut} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Wordbook />
+          <Grid container direction='column' alignItems='center' spacing={24}>
+            <Grid item >
+              <Wordbook />
+            </Grid>
+            <Grid item >
+              <Wordbook />
+            </Grid>
+          </Grid>
           {/* <Dialog
             open={Boolean(this.state.openAskSave)}
             onClose={this.handleAskSaveClose}

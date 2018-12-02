@@ -20,7 +20,7 @@ import { ExpandMore as ExpandMoreIcon, } from '@material-ui/icons';
 
 const styles = theme => ({
     card: {
-      maxWidth: 800,
+      width: 800,
     },
     media: {
       height: 0,
@@ -47,14 +47,22 @@ const styles = theme => ({
     },
     wordbookImg: {
       height: 180,
-      paddingTop: theme.spacing.unit,
-      paddingBottom: theme.spacing.unit,
+      padding: theme.spacing.unit,
+    },
+    image: {
+      maxWidth: '100%',
+      maxHeight: '100%',
     },
     wordbookContent: {
       height: 180,
+      // padding: theme.spacing.unit * 2,
       paddingTop: theme.spacing.unit * 2,
       paddingBottom: theme.spacing.unit * 2,
-    }
+    },
+    wordbookPercent: {
+      height: 180,
+      paddingRight: theme.spacing.unit * 4,
+    },
     // avatar: {
     //   backgroundColor: red[500],
     // },
@@ -93,10 +101,12 @@ class Wordbook extends Component {
         <CardContent className={classes.wordbook} >
           <Grid container direction='row' justify='space-between' alignItems='flex-start'>
             <Grid item xs={3}>
-              <img src={'http://read-and-play.eu/images/stories/virtuemart/product/lift-flap-word-book.jpg'}
-                 alt={'sex'}
-                 className={classes.wordbookImg}
-              />
+              <Grid container justify='flex-start' alignItems='center' className={classes.wordbookImg}>
+                <img src={'http://read-and-play.eu/images/stories/virtuemart/product/lift-flap-word-book.jpg'}
+                  alt={'haha'}
+                  className={classes.image}
+                />
+              </Grid>
             </Grid>
             <Grid item xs={6}>
               <Grid container direction='column' justify='space-between' className={classes.wordbookContent} >
@@ -107,7 +117,7 @@ class Wordbook extends Component {
                 </Grid>
                 <Grid item >
                   <Typography variant='body1' >
-                    {`이 단어장은 영국에서 시작되어 어쩌고 저쩌고, 최고의 단어장 by 이종완`}
+                    {`좋은 단어장입니다.`}
                   </Typography>
                 </Grid>
                 <Grid item >
@@ -118,7 +128,7 @@ class Wordbook extends Component {
               </Grid>
             </Grid>
             <Grid item xs={3}>
-              <Grid container justify='flex-end' alignItems='center' className={classes.wordbookContent}>
+              <Grid container justify='flex-end' alignItems='center' className={classes.wordbookPercent}>
                 <Typography variant='h2'>
                   {`50%`}
                 </Typography>
