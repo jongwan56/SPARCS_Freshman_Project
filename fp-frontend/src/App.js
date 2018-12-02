@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { SignInPage, SignUpPage, HomePage } from 'pages';
+import { SignInPage, SignUpPage, HomePage, ChapterPage } from 'pages';
 
 class App extends Component {
   render() {
@@ -14,6 +14,7 @@ class App extends Component {
           </Switch> */}
           <Route exact path="/signin" component={SignInPage} />
           <Route exact path="/signup" component={SignUpPage} />
+          <Route exact path="/learn/:bookId/:chapterId" component={ChapterPage} />
         </div>
       </BrowserRouter>
     );

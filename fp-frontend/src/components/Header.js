@@ -15,6 +15,9 @@ const styles = theme => ({
   // button: {
   //   marginLeft: theme.spacing.unit,
   // }
+  homeIcon: {
+    marginRight: theme.spacing.unit,
+  },
 });
 
 const Header = ({ classes, handleClickHome, handleSignOut, mode }) => (
@@ -28,6 +31,7 @@ const Header = ({ classes, handleClickHome, handleSignOut, mode }) => (
                 color="inherit"
                 aria-label="Go Home"
                 onClick={handleClickHome}
+                className={classes.homeIcon}
               >
                 <HomeIcon />
               </IconButton>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Header, Wordbook } from 'components';
+import { Header, Wordbook, WordCard } from 'components';
 import { connect } from 'react-redux';
 import { getStatusRequest, signOutRequest } from 'actions/account';
 import { withRouter } from 'react-router-dom';
@@ -10,8 +10,13 @@ import {
   CssBaseline,
   Snackbar,
   Grid,
+  Typography,
+  IconButton,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
+import {
+  FilterList as FilterIcon,
+} from '@material-ui/icons'
 
 const styles = theme => ({
   root: {
@@ -32,14 +37,21 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: '100%'
   },
+  index: {
+    width: 800,
+    height: 50,
+  },
+  indexItem: {
+    height: '100%'
+  }
 });
 
-class Home extends Component {
+class Chapter extends Component {
   state = {
     openSignOutSnackBar : false,
   }
 
-  handleCloseSignOutSnackBar = (event, reason) => {
+  handleCloseSingOutSnackBar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -122,15 +134,40 @@ class Home extends Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Header handleClickHome={this.handleHomeClick} handleSignOut={this.handleSignOut} />
+        <Header handleClickHome={this.handleHomeClick} handleSignOut={this.handleSignOut} name={'영단어 마스터 > Day1'} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Grid container direction='column' alignItems='center' spacing={24}>
+          <Grid container direction='column' alignItems='center' spacing={8}>
             <Grid item >
-              <Wordbook />
+              <Grid container className={classes.index} >
+                <Grid item xs={4} >
+                  <Grid container justify='center' alignItems='center' className={classes.indexItem}>
+                    <Typography variant='body1'>
+                      단어
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={5}>
+                  <Grid container justify='center' alignItems='center' className={classes.indexItem}>
+                    <Typography variant='body1'>
+                      뜻
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={3}>
+                  <Grid container justify='center' alignItems='center' className={classes.indexItem}>
+                    <Typography variant='body1'>
+                      &nbsp; &nbsp;확인
+                    </Typography>
+                    <IconButton>
+                      <FilterIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item >
-              <Wordbook />
+              <WordCard />
             </Grid>
           </Grid>
           {/* <Dialog
@@ -167,7 +204,7 @@ class Home extends Component {
           }}
           open={this.state.openSignOutSnackBar}
           autoHideDuration={3000}
-          onClose={this.handleCloseSignOutSnackBar}
+          onClose={this.handleCloseSingOutSnackBar}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
@@ -209,9 +246,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-Home.propTypes = {
+Chapter.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Home)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Chapter)));

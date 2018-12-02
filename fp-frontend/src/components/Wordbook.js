@@ -15,16 +15,14 @@ import {
   Collapse,
   List,
   ListItem,
+  Divider,
 } from '@material-ui/core';
 import { ExpandMore as ExpandMoreIcon, } from '@material-ui/icons';
+import { WordbookChapter } from 'components'
 
 const styles = theme => ({
     card: {
       width: 800,
-    },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
     },
     actions: {
       display: 'flex',
@@ -62,6 +60,14 @@ const styles = theme => ({
     wordbookPercent: {
       height: 180,
       paddingRight: theme.spacing.unit * 4,
+    },
+    chapters: {
+      paddingTop: 0,
+      paddingBottom: 200,
+    },
+    chaptersList: {
+      paddingTop: 0,
+      paddingBottom: 0,
     },
     // avatar: {
     //   backgroundColor: red[500],
@@ -117,7 +123,7 @@ class Wordbook extends Component {
                 </Grid>
                 <Grid item >
                   <Typography variant='body1' >
-                    {`좋은 단어장입니다.`}
+                    {`좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다.`}
                   </Typography>
                 </Grid>
                 <Grid item >
@@ -149,10 +155,13 @@ class Wordbook extends Component {
           </IconButton>
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <List>
-              <ListItem>1</ListItem>
-              <ListItem>2</ListItem>
+          <CardContent className={classes.chapters}>
+            <List className={classes.chaptersList}>
+              <Divider />
+              <WordbookChapter />            
+              <Divider />
+              <WordbookChapter />            
+              <Divider />
             </List>
           </CardContent>
         </Collapse>
