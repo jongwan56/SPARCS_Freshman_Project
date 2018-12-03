@@ -82,33 +82,14 @@ class Wordbook extends Component {
   };
 
   render() {
-    const { classes, handleClickHome, handleSignOut, mode } = this.props;
+    const { classes, wordbook } = this.props;
     return (
-      <Card className={classes.card}>
-        {/* <CardHeader
-          avatar={
-            <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
-            </Avatar>
-          }
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
-        /> */}
-        {/* <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        /> */}
+      <Card className={classes.card} >
         <CardContent className={classes.wordbook} >
           <Grid container direction='row' justify='space-between' alignItems='flex-start'>
             <Grid item xs={3}>
               <Grid container justify='flex-start' alignItems='center' className={classes.wordbookImg}>
-                <img src={'http://read-and-play.eu/images/stories/virtuemart/product/lift-flap-word-book.jpg'}
+                <img src={wordbook.imgSrc}
                   alt={'haha'}
                   className={classes.image}
                 />
@@ -118,17 +99,17 @@ class Wordbook extends Component {
               <Grid container direction='column' justify='space-between' className={classes.wordbookContent} >
                 <Grid item >
                   <Typography variant='h4' >
-                    {`영단어 마스터`}
+                    {wordbook.wbName}
                   </Typography>
                 </Grid>
                 <Grid item >
                   <Typography variant='body1' >
-                    {`좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다. 좋은 단어장입니다.`}
+                    {wordbook.wbDescription}
                   </Typography>
                 </Grid>
                 <Grid item >
                   <Typography>
-                    {`총 2000단어, 40일 코스`}
+                    {`총 ${wordbook.totalWords}단어, ${wordbook.totalChapters} 챕터`}
                   </Typography>
                 </Grid>
               </Grid>
@@ -136,7 +117,7 @@ class Wordbook extends Component {
             <Grid item xs={3}>
               <Grid container justify='flex-end' alignItems='center' className={classes.wordbookPercent}>
                 <Typography variant='h2'>
-                  {`50%`}
+                  {`${wordbook.wbPercentage}%`}
                 </Typography>
               </Grid>
             </Grid>
@@ -158,10 +139,9 @@ class Wordbook extends Component {
           <CardContent className={classes.chapters}>
             <List className={classes.chaptersList}>
               <Divider />
-              <WordbookChapter />            
-              <Divider />
-              <WordbookChapter />            
-              <Divider />
+              {wordbook.chapters.map((chapter, index) => (
+                <WordbookChapter chapter={chapter} key={index} />
+              ))}
             </List>
           </CardContent>
         </Collapse>

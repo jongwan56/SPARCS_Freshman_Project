@@ -7,20 +7,20 @@ const router = express.Router();
 /* GET users listing. */
 router.get('/search', async (req, res, next) => {
   const { word } = req.query;
-  
+
   const result = await axios.get(`https://dict.naver.com/search.nhn?query=${word}`);
 
   const $ = cheerio.load(result.data);
 
   let pronunciation = [];
-  $(`.en_dic_section > dl > dt > span.fnt_e25`).each(function() {
+  $('.en_dic_section > dl > dt > span.fnt_e25').each(function () {
     pronunciation.push($(this).text().replace(/(^\s+|\s+$)/g, ""));
   });
 
   pronunciation = pronunciation[0] || '';
 
   let meaning_raw = [];
-  $(`.en_dic_section > dl > dd`).each(function() {
+  $('.en_dic_section > dl > dd').each(function () {
     meaning_raw.push($(this).text().replace(/(^\s+|\s+$)/g, ""));
   });
 
@@ -48,7 +48,7 @@ router.get('/search', async (req, res, next) => {
 
   mp3 = mp3[0] || '';
 
-  res.json({ mp3, meanings, pronunciation })
+  res.json({ mp3, meanings, pronunciation });
 });
 
 export default router;

@@ -7,16 +7,17 @@ const Account = new Schema({
   name: String,
   id: String,
   password: String,
+  wordbooks: [String],
   created: { type: Date, default: Date.now }
 });
 
 // generates hash
-Account.methods.generateHash = function(password) {
+Account.methods.generateHash = function (password) {
   return bcrypt.hashSync(password, 8);
 };
 
 // compares the password
-Account.methods.validateHash = function(password) {
+Account.methods.validateHash = function (password) {
   return bcrypt.compareSync(password, this.password);
 };
 

@@ -62,8 +62,8 @@ process.on('uncaughtException', (err) => {
 const db = mongoose.connection;
 db.on('error', console.error);
 db.once('open', () => { console.log('Connected to mongodb server'); });
-// mongoose.connect('mongodb://username:password@host:port/database=');
-mongoose.connect('mongodb://localhost/freshman-project', { useNewUrlParser: true });
+mongoose.connect('mongodb://ssal.sparcs.org:33028/freshman-project', { useNewUrlParser: true });
+// mongoose.connect('mongodb://localhost/freshman-project', { useNewUrlParser: true });
 
 
 

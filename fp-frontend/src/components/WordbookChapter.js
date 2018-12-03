@@ -91,26 +91,22 @@ class WordbookChapter extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, chapter } = this.props;
+    console.log(chapter);
     return (
       <ListItem button>
         <Grid container alignItems='center' className={classes.chapter} spacing={16}>
           <Grid item xs={2} >
             <Grid container justify='flex-start' alignItems='center' className={classes.chapterName} >
               <Typography variant='h4'>
-                {`Day1`}
+                {chapter.name}
               </Typography>
             </Grid>
           </Grid>
-          <div style={{
-            border: 'solid #ff0000',
-            height: '100%'
-            }}>
-          </div>
           <Grid item xs={6} >
             <Grid container justify='flex-start' alignItems='center' className={classes.chapterDescription} >
               <Typography variant='body1'>
-                {`첫번째 날, A로 시작하는 단어^^ 첫번째 날, A로 시작하는 단어^^ 첫번째 날, A로 시작하는 단어^^`}
+                {chapter.description}
               </Typography>
             </Grid>
           </Grid>
@@ -123,10 +119,10 @@ class WordbookChapter extends Component {
                   </Typography>
                 </Grid>
                 <Grid item xs={9}>
-                  <LinearProgress variant="determinate" value={50} />
+                  <LinearProgress variant="determinate" value={70} />
                 </Grid>
               </Grid>
-              <Grid container alignItems='center' >
+              {/* <Grid container alignItems='center' >
                 <Grid item xs={3}>
                   <Typography>
                     Test
@@ -135,7 +131,7 @@ class WordbookChapter extends Component {
                 <Grid item xs={9}>
                   <LinearProgress variant="determinate" value={50} />
                 </Grid>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Grid>
         </Grid>

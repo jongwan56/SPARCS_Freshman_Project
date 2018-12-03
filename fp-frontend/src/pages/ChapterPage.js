@@ -38,7 +38,7 @@ const styles = theme => ({
     width: '100%'
   },
   index: {
-    width: 800,
+    width: 1000,
     height: 50,
   },
   indexItem: {
@@ -139,7 +139,7 @@ class Chapter extends Component {
           <div className={classes.toolbar} />
           <Grid container direction='column' alignItems='center' spacing={8}>
             <Grid item >
-              <Grid container className={classes.index} >
+              <Grid container className={classes.index} justify='space-between' >
                 <Grid item xs={4} >
                   <Grid container justify='center' alignItems='center' className={classes.indexItem}>
                     <Typography variant='body1'>
@@ -147,11 +147,29 @@ class Chapter extends Component {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item >
+                  <Grid container justify='center' alignItems='center' className={classes.indexItem}>
+                    <div style={{
+                      border: '0.5px dashed #CCCCCC',
+                      height: '80%'
+                      }}>
+                    </div>
+                  </Grid>
+                </Grid>
+                <Grid item xs={4}>
                   <Grid container justify='center' alignItems='center' className={classes.indexItem}>
                     <Typography variant='body1'>
                       뜻
                     </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item >
+                  <Grid container justify='center' alignItems='center' className={classes.indexItem}>
+                    <div style={{
+                      border: '0.5px dashed #CCCCCC',
+                      height: '80%'
+                      }}>
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid item xs={3}>
@@ -165,6 +183,30 @@ class Chapter extends Component {
                   </Grid>
                 </Grid>
               </Grid>
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
+            </Grid>
+            <Grid item >
+              <WordCard />
             </Grid>
             <Grid item >
               <WordCard />

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Header, Wordbook } from 'components';
 import { connect } from 'react-redux';
 import { getStatusRequest, signOutRequest } from 'actions/account';
+import { wordbookListRequest } from 'actions/wordbook';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,6 +13,7 @@ import {
   Grid,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
+import wordbook from '../reducers/wordbook';
 
 const styles = theme => ({
   root: {
@@ -93,6 +95,12 @@ class Home extends Component {
         }
       }
     );
+
+    this.props.wordbookListRequest().then(
+      () => {
+        console.log(this.props.wordbooks);
+      }
+    );
   }
 
   handleSignOut = async () => {
@@ -114,9 +122,6 @@ class Home extends Component {
 
 
   render() {
-    /* Check whether current route is login or register using regex */
-    // let re = /(login|register)/;
-    // let isAuth = re.test(this.props.location.pathname);
     const { classes } = this.props;
 
     return (
@@ -126,67 +131,14 @@ class Home extends Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Grid container direction='column' alignItems='center' spacing={24}>
-            <Grid item >
-              <Wordbook />
-            </Grid>
-            <Grid item >
-              <Wordbook />
-            </Grid>
+            {this.props.wordbooks.map((wordbook, index) => 
+              <Grid item key={index} >
+                <Wordbook wordbook={wordbook} />
+              </Grid>
+            )}
           </Grid>
-          {/* <Dialog
-            open={Boolean(this.state.openAskSave)}
-            onClose={this.handleAskSaveClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              저장하지 않은 데이터가 있어유
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                그냥 넘어가면 다 없어져유
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleAskSaveClose} color="primary" autoFocus>
-                취소
-              </Button>
-              <Button onClick={this.handleAskSaveNo} color="primary">
-                저장하지 않고 진행
-              </Button>
-              <Button onClick={this.handleAskSaveYes} color="primary" autoFocus>
-                저장하고 진행
-              </Button>
-            </DialogActions>
-          </Dialog> */}
+    
         </main>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          open={this.state.openSignOutSnackBar}
-          autoHideDuration={3000}
-          onClose={this.handleCloseSignOutSnackBar}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">로그아웃 되었습니다.</span>}
-          action={[
-            // <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
-            //   UNDO
-            // </Button>,
-            // <IconButton
-            //   key="close"
-            //   aria-label="Close"
-            //   color="inherit"
-            //   className={classes.close}
-            //   onClick={this.handleClose}
-            // >
-            //   <CloseIcon />
-            // </IconButton>,
-          ]}
-        />
       </div>
     );
   }
@@ -195,6 +147,7 @@ class Home extends Component {
 const mapStateToProps = (state) => {
   return {
     status: state.account.status,
+    wordbooks: state.wordbook.list.wordbooks,
   };
 };
 
@@ -205,6 +158,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     signOutRequest: () => {
       return dispatch(signOutRequest());
+    },
+    wordbookListRequest: () => {
+      return dispatch(wordbookListRequest());
     }
   };
 };

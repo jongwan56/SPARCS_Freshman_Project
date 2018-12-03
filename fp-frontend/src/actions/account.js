@@ -12,10 +12,6 @@ import {
     ACCOUNT_SIGNOUT,
 } from './ActionTypes';
 
-/*============================================================================
-    account
-==============================================================================*/
-
 export function signInRequest(id, password) {
   return async (dispatch) => {
     // Inform signin API is starting
