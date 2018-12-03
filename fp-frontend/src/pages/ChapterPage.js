@@ -151,7 +151,7 @@ class Chapter extends Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <Header handleClickHome={this.handleHomeClick} handleSignOut={this.handleSignOut} name={'영단어 마스터 > Day1'} />
+        <Header handleClickHome={this.handleHomeClick} handleSignOut={this.handleSignOut} name={this.state.chapterName} />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Grid container direction='column' alignItems='center' spacing={8}>

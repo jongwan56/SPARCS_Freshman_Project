@@ -7,7 +7,7 @@ const Account = new Schema({
   name: String,
   id: String,
   password: String,
-  wordbooks: [String],
+  wordbooks: [{ type: String, defalut: '5c0483cb08bbed87557121dd' }],
   created: { type: Date, default: Date.now }
 });
 

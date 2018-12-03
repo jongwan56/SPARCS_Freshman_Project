@@ -10,6 +10,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { Home as HomeIcon, } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
   // button: {
@@ -20,7 +21,7 @@ const styles = theme => ({
   },
 });
 
-const Header = ({ classes, handleClickHome, handleSignOut, name }) => (
+const Header = ({ classes, handleSignOut, name }) => (
   <AppBar position="fixed" >
     <Toolbar>
       <Grid container justify="space-between" alignItems="center">
@@ -30,7 +31,8 @@ const Header = ({ classes, handleClickHome, handleSignOut, name }) => (
               <IconButton
                 color="inherit"
                 aria-label="Go Home"
-                onClick={handleClickHome}
+                component={Link}
+		to='/'
                 className={classes.homeIcon}
               >
                 <HomeIcon />
@@ -38,7 +40,7 @@ const Header = ({ classes, handleClickHome, handleSignOut, name }) => (
             </Grid>
             <Grid item>
               <Typography variant="h6" color="inherit" >
-                {name || 'Freshman Project'}
+                {name || 'SPARCS Word Master'}
               </Typography>
             </Grid>
           </Grid>

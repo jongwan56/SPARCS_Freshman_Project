@@ -49,7 +49,7 @@ router.post('/signup', (req, res) => {
     });
 
     account.password = account.generateHash(account.password);
-
+    account.wordbooks = ['5c05174a08bbed87557121ea', '5c0483cb08bbed87557121dd'];
     // SAVE IN THE DATABASE
     account.save( err => {
       if(err) throw err;
