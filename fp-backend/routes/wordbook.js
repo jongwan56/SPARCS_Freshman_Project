@@ -56,8 +56,8 @@ router.get('/word/:wordId', (req, res) => {
   Word.findById(wordId, (err, word) => {
     for (let i=0; i<word.checks.length; i++) {
       if (word.checks[i].user_id === req.session.loginInfo._id) {
-        
-        return res.json({ word, check: word.check[i].state });
+        console.log('ㅇㅇ')
+        return res.json({ word, check: word.checks[i].state });
       }
     }
     return res.json({ word, check: 'Never' });
