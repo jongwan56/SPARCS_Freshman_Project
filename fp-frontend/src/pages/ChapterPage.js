@@ -17,6 +17,7 @@ import {
 import {
   FilterList as FilterIcon,
 } from '@material-ui/icons'
+import axios from 'axios'; 
 
 const styles = theme => ({
   root: {
@@ -49,6 +50,8 @@ const styles = theme => ({
 class Chapter extends Component {
   state = {
     openSignOutSnackBar : false,
+    chapterName: '',
+    words: [],
   }
 
   handleCloseSingOutSnackBar = (event, reason) => {
@@ -58,7 +61,7 @@ class Chapter extends Component {
     this.setState({ openSignOutSnackBar: false });
   };
 
-  componentDidMount() {
+  componentDidMount = async () => {
     // get cookie by name
     const getCookie = (name) => {
       const value = "; " + document.cookie;
@@ -105,6 +108,19 @@ class Chapter extends Component {
         }
       }
     );
+    let chapter = await axios.get(`/api/wordbook/chapter/${this.props.match.params.chapterId}`);
+    chapter = chapter.data.chapter;
+    const words = [];
+    for (let i=0; i<chapter.words.length; i++) {
+      const word = await axios.get(`/api/wordbook/word/${chapter.words[i]}`);
+      // console.log(word.data.check);
+      const newWord = word.data.word;
+      newWord.check = word.data.check;
+      console.log(newWord);
+      words.push(newWord);
+    }
+    this.setState({ chapterName: chapter.name, words })
+    console.log(chapter);
   }
 
   handleSignOut = async () => {
@@ -123,6 +139,7 @@ class Chapter extends Component {
       console.log('Logout failed');
     }
   }
+
 
 
   render() {
@@ -184,33 +201,11 @@ class Chapter extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
-            <Grid item >
-              <WordCard />
-            </Grid>
+            {this.state.words.map((word, index) => (
+              <Grid item key={index} >
+                <WordCard word={word} />
+              </Grid>
+            ))}
           </Grid>
           {/* <Dialog
             open={Boolean(this.state.openAskSave)}

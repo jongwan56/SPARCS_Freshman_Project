@@ -17,6 +17,7 @@ import {
   ListItem,
   LinearProgress,
 } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import { ExpandMore as ExpandMoreIcon, } from '@material-ui/icons';
 
 const styles = theme => ({
@@ -88,13 +89,18 @@ class WordbookChapter extends Component {
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
-  };
+  }
+
+  // handleClickChapter = () => {
+  //   const chapterId = this.props.chapter._id;
+    
+  // }
 
   render() {
     const { classes, chapter } = this.props;
     console.log(chapter);
     return (
-      <ListItem button>
+      <ListItem button component={Link} to={`/learn/${chapter._id}`} >
         <Grid container alignItems='center' className={classes.chapter} spacing={16}>
           <Grid item xs={2} >
             <Grid container justify='flex-start' alignItems='center' className={classes.chapterName} >

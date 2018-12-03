@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-const Header = ({ classes, handleClickHome, handleSignOut, mode }) => (
+const Header = ({ classes, handleClickHome, handleSignOut, name }) => (
   <AppBar position="fixed" >
     <Toolbar>
       <Grid container justify="space-between" alignItems="center">
@@ -38,7 +38,7 @@ const Header = ({ classes, handleClickHome, handleSignOut, mode }) => (
             </Grid>
             <Grid item>
               <Typography variant="h6" color="inherit" >
-                Freshman Project
+                {name || 'Freshman Project'}
               </Typography>
             </Grid>
           </Grid>

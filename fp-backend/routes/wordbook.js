@@ -50,6 +50,20 @@ router.get('/chapter/:chapterId', (req, res) => {
   });
 });
 
+router.get('/word/:wordId', (req, res) => {
+  const wordId = req.params.wordId;
+
+  Word.findById(wordId, (err, word) => {
+    for (let i=0; i<word.checks.length; i++) {
+      if (word.checks[i].user_id === req.session.loginInfo._id) {
+        
+        return res.json({ word, check: word.check[i].state });
+      }
+    }
+    return res.json({ word, check: 'Never' });
+  })
+});
+
 // CHECK STATE UPDATE
 router.put('/check', (req, res) => {
   if (typeof req.session.loginInfo === 'undefined') {

@@ -2,9 +2,47 @@ import {
     WORDBOOK_LIST,
     WORDBOOK_LIST_SUCCESS,
     WORDBOOK_LIST_FAILURE,
+    WORD_CHECK_PUT,
+    WORD_CHECK_PUT_SUCCESS,
+    WORD_CHECK_PUT_FAILURE,
 } from './ActionTypes'
 
 import axios from 'axios';
+
+
+export function wordCheckPutRequest(wordId, checkState) {
+  return async (dispatch) => {
+    dispatch(wordCheckPut());
+
+    try {
+      const success = await axios.put('/api/wordbook/check', { wordId, checkState });
+      console.log(success);
+      dispatch(wordCheckPutSuccess());
+    } catch (error) {
+      console.log('fail');
+      dispatch(wordCheckPutFailure(error.response.data.code));
+    }
+  }
+}
+
+export function wordCheckPut() {
+  return {
+      type: WORD_CHECK_PUT,
+  };
+}
+
+export function wordCheckPutSuccess() {
+  return {
+      type: WORD_CHECK_PUT_SUCCESS,
+  };
+}
+
+export function wordCheckPutFailure(error) {
+  return {
+      type: WORD_CHECK_PUT_FAILURE,
+      error,
+  };
+}
 
 export function wordbookListRequest() {
   return (dispatch) => {

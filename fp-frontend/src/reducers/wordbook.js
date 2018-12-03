@@ -2,7 +2,7 @@ import * as types from 'actions/ActionTypes';
 import update from 'react-addons-update';
 
 const initialState = {
-  post: {
+  put: {
       status: 'INIT',
       error: -1
   },
@@ -18,6 +18,26 @@ export default function wordbook(state, action) {
     state = initialState;
   }
   switch(action.type) {
+    case types.WORD_CHECK_PUT:
+      return update(state, {
+        put: {
+          status: { $set: 'WAITING' },
+          error: { $set: -1 },
+        }
+      });
+    case types.WORD_CHECK_PUT_SUCCESS:
+      return update(state, {
+        put: {
+          status: { $set: 'SUCCESS' }
+        }
+      });
+    case types.WORD_CHECK_PUT_FAILURE:
+      return update(state, {
+        put: {
+          status: { $set: 'FAILURE' },
+          error: { $set: action.error }
+        }
+      });
     /* CODES */
     case types.WORDBOOK_LIST:
       return update(state, {

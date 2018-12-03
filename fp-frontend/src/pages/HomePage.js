@@ -13,7 +13,6 @@ import {
   Grid,
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
 } from '@material-ui/core';
-import wordbook from '../reducers/wordbook';
 
 const styles = theme => ({
   root: {
